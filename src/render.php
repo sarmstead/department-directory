@@ -1,8 +1,25 @@
 <?php
-/**
- * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
- */
-?>
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e( 'Knight Finder – hello from a dynamic block!', 'knight-finder' ); ?>
-</p>
+
+$allowed_html = [
+	'div' => [
+		'class' => [],
+		'id' => []
+	],
+	'p' => [
+		'class' => [],
+		'id' => []
+	],
+	'svg' => [
+		'xmlns' => [],
+		'fill' => [],
+		'viewbox'  => [],
+		'height' => [],
+		'width' => [],
+	],
+	'path' => [
+		'd' => [],
+		'fill' => [],
+	],
+];
+
+echo wp_kses($content, $allowed_html);

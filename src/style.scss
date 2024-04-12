@@ -5,8 +5,25 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-knight-finder-knight-finder {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+.knight-finder {
+	&__status {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px;
+
+		p {
+			margin: unset;
+		}
+
+		&.active {
+			background-color: #defabb;
+			color: #008b00;
+		}
+
+		&.inactive {
+			background-color: #ffebee;
+			color: #b71c1c;
+		}
+	}
 }

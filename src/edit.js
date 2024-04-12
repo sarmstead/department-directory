@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +11,9 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { PanelBody, ToggleControl } from "@wordpress/components";
+import Status from "./components/Status";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -19,7 +21,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import "./editor.scss";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,10 +31,22 @@ import './editor.scss';
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+export default function Edit({ attributes, setAttributes }) {
+	const { isActive } = attributes;
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Knight Finder – hello from the editor!', 'knight-finder' ) }
-		</p>
+		<>
+			<InspectorControls>
+				<PanelBody title={__("Settings", "knight-finder")}>
+					<ToggleControl
+						label={__("Is Active?", "knight-finder")}
+						checked={!!isActive}
+						onChange={() => setAttributes({ isActive: !isActive })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...useBlockProps()}>
+				<Status isActive={isActive} />
+			</div>
+		</>
 	);
 }

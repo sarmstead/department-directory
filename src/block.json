@@ -8,6 +8,11 @@
 	"icon": "clipboard",
 	"description": "A lightweight block for finding departments.",
 	"example": {},
+	"attributes": {
+		"isActive": {
+			"type": "boolean"
+		}
+	},
 	"supports": {
 		"html": false
 	},

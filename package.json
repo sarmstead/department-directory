@@ -1,0 +1,24 @@
+{
+	"name": "knight-finder",
+	"version": "0.1.0",
+	"description": "A lightweight block for finding departments.",
+	"author": "Sunjay Armstead",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://sunjayarmstead.com",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build --webpack-copy-php",
+		"format": "wp-scripts format",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"packages-update": "wp-scripts packages-update",
+		"plugin-zip": "wp-scripts plugin-zip",
+		"start": "wp-scripts start --webpack-copy-php",
+		"dev": "wp-env start",
+		"stop": "wp-env stop"
+	},
+	"devDependencies": {
+		"@wordpress/env": "^9.7.0",
+		"@wordpress/scripts": "^27.6.0"
+	}
+}

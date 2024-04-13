@@ -95,7 +95,11 @@ export default function Edit({ attributes, setAttributes }) {
 										value={campusPhone}
 										onChange={(value) => setCampusPhone(value)}
 									/>
-									<Button variant="primary" onClick={saveCampus}>
+									<Button
+										variant="primary"
+										onClick={saveCampus}
+										disabled={campusName.length < 1 || campusPhone.length < 1}
+									>
 										Save Campus
 									</Button>
 								</CardBody>

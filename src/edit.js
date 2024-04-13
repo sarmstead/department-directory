@@ -42,10 +42,26 @@ import "./editor.scss";
  */
 export default function Edit({ attributes, setAttributes }) {
 	const [campusName, setCampusName] = useState("");
+	const [campusPhone, setCampusPhone] = useState("");
+	const [campuses, setCampuses] = useState([]);
 	const [campusToggle, setCampusToggle] = useState(false);
 	const { isActive } = attributes;
 
 	const toggleCampus = () => setCampusToggle(!campusToggle);
+
+	const saveCampus = () => {
+		toggleCampus();
+		setCampuses((campusList) => [
+			...campusList,
+			{
+				campusName,
+				campusPhone,
+			},
+		]);
+		setCampusName("");
+		setCampusPhone("");
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -77,21 +93,40 @@ export default function Edit({ attributes, setAttributes }) {
 									/>
 									<TextControl
 										label={__("Phone", "knight-finder")}
-										value={campusName}
-										onChange={(value) => setCampusName(value)}
+										value={campusPhone}
+										onChange={(value) => setCampusPhone(value)}
 									/>
-									<Button variant="primary" onClick={toggleCampus}>
+									<Button variant="primary" onClick={saveCampus}>
 										Save Campus
 									</Button>
 								</CardBody>
 							</Card>
 						</PanelRow>
 					)}
+					{campuses.length > 0 && (
+						<div className="knight-finder__editor__panel__campus-list">
+							<h2>Added Campuses</h2>
+							<ul>
+								{campuses.map((campus) => {
+									return (
+										<li
+											className="knight-finder__editor__panel__campus-list__item"
+											key={campus.campusName}
+										>
+											<h3>{campus.campusName}</h3>
+											<p>{campus.campusPhone}</p>
+										</li>
+									);
+								})}
+							</ul>
+						</div>
+					)}
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
 				<Status isActive={isActive} />
 				<p>Campus: {campusName}</p>
+				{console.log(campuses)}
 			</div>
 		</>
 	);

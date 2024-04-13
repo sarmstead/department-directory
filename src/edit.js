@@ -19,11 +19,12 @@ import {
 	Icon,
 	PanelBody,
 	PanelRow,
+	Snackbar,
 	TextControl,
 	ToggleControl,
 } from "@wordpress/components";
 import Status from "./components/Status";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -45,7 +46,16 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusName, setCampusName] = useState("");
 	const [campusPhone, setCampusPhone] = useState("");
 	const [campusToggle, setCampusToggle] = useState(false);
+	const [campusSaved, setCampusSaved] = useState(false);
 	const { isActive, campuses } = attributes;
+
+	useEffect(() => {
+		if (campusSaved) {
+			setTimeout(() => {
+				setCampusSaved(false);
+			}, 5000);
+		}
+	}, [campusSaved]);
 
 	const toggleCampus = () => setCampusToggle(!campusToggle);
 
@@ -54,6 +64,7 @@ export default function Edit({ attributes, setAttributes }) {
 		setAttributes({ campuses: [...campuses, { campusName, campusPhone }] });
 		setCampusName("");
 		setCampusPhone("");
+		setCampusSaved(true);
 	};
 
 	const removeCampus = (campusForDeletion) => {
@@ -74,6 +85,11 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Campuses", "knight-finder")}>
+					{campusSaved && (
+						<Snackbar>
+							Don't forget to select "Update" on this page as well!
+						</Snackbar>
+					)}
 					{!campusToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleCampus}>

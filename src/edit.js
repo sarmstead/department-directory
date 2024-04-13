@@ -56,6 +56,11 @@ export default function Edit({ attributes, setAttributes }) {
 		setCampusPhone("");
 	};
 
+	const removeCampus = (campusForDeletion) => {
+		const newList = campuses.filter((campus) => campus !== campusForDeletion);
+		setAttributes({ campuses: newList });
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -119,6 +124,7 @@ export default function Edit({ attributes, setAttributes }) {
 												title="Remove campus"
 												size="small"
 												isDestructive="true"
+												onClick={() => removeCampus(campus)}
 											></Button>
 										</li>
 									);

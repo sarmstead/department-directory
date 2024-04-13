@@ -43,21 +43,14 @@ import "./editor.scss";
 export default function Edit({ attributes, setAttributes }) {
 	const [campusName, setCampusName] = useState("");
 	const [campusPhone, setCampusPhone] = useState("");
-	const [campuses, setCampuses] = useState([]);
 	const [campusToggle, setCampusToggle] = useState(false);
-	const { isActive } = attributes;
+	const { isActive, campuses } = attributes;
 
 	const toggleCampus = () => setCampusToggle(!campusToggle);
 
 	const saveCampus = () => {
 		toggleCampus();
-		setCampuses((campusList) => [
-			...campusList,
-			{
-				campusName,
-				campusPhone,
-			},
-		]);
+		setAttributes({ campuses: [...campuses, { campusName, campusPhone }] });
 		setCampusName("");
 		setCampusPhone("");
 	};
@@ -125,8 +118,6 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...useBlockProps()}>
 				<Status isActive={isActive} />
-				<p>Campus: {campusName}</p>
-				{console.log(campuses)}
 			</div>
 		</>
 	);

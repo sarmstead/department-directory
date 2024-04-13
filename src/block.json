@@ -11,6 +11,10 @@
 	"attributes": {
 		"isActive": {
 			"type": "boolean"
+		},
+		"campuses": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"supports": {

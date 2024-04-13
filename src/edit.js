@@ -16,6 +16,7 @@ import {
 	Button,
 	Card,
 	CardBody,
+	Icon,
 	PanelBody,
 	PanelRow,
 	TextControl,
@@ -102,12 +103,23 @@ export default function Edit({ attributes, setAttributes }) {
 							<ul>
 								{campuses.map((campus) => {
 									return (
-										<li
-											className="knight-finder__editor__panel__campus-list__item"
-											key={campus.campusName}
-										>
-											<h3>{campus.campusName}</h3>
-											<p>{campus.campusPhone}</p>
+										<li key={campus.campusName}>
+											<div>
+												<h3 className="knight-finder__editor__panel__campus-list__attribute">
+													{campus.campusName}&nbsp;Campus
+												</h3>
+												<p className="knight-finder__editor__panel__campus-list__attribute">
+													<Icon size="12" icon="smartphone" />
+													{campus.campusPhone}
+												</p>
+											</div>
+											<Button
+												icon="remove"
+												iconSize="14"
+												title="Remove campus"
+												size="small"
+												isDestructive="true"
+											></Button>
 										</li>
 									);
 								})}

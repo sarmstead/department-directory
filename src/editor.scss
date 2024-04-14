@@ -43,6 +43,20 @@
 					gap: 2px;
 				}
 			}
+
+			&__error {
+				background-color: #ffebee;
+				color: #b71c1c;
+				padding: 12px 20px;
+				font-size: 14px;
+
+				&.with-icon {
+					.knight-finder__icon {
+						margin-right: 4px;
+						line-height: 17px;
+					}
+				}
+			}
 		}
 	}
 }

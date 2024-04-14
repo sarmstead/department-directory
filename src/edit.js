@@ -16,12 +16,15 @@ import {
 import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import "./editor.scss";
+import { formatPhone } from "./utils";
 
 export default function Edit({ attributes, setAttributes }) {
 	const [campusName, setCampusName] = useState("");
 	const [campusPhone, setCampusPhone] = useState("");
 	const [campusToggle, setCampusToggle] = useState(false);
 	const [campusSaved, setCampusSaved] = useState(false);
+	const errorShape = { campuses: [] };
+	const [errors, setError] = useState(errorShape);
 	const { campuses, isActive } = attributes;
 
 	useEffect(() => {
@@ -35,8 +38,30 @@ export default function Edit({ attributes, setAttributes }) {
 	const toggleCampus = () => setCampusToggle(!campusToggle);
 
 	const saveCampus = () => {
+		const formattedPhone = formatPhone(campusPhone);
+
+		if (formattedPhone.error) {
+			setError((existingErrors) => {
+				return {
+					...existingErrors,
+					campuses: [...existingErrors.campuses, formattedPhone.code],
+				};
+			});
+
+			setTimeout(() => {
+				setError(errorShape);
+			}, 5000);
+
+			return;
+		}
+
 		toggleCampus();
-		setAttributes({ campuses: [...campuses, { campusName, campusPhone }] });
+		setAttributes({
+			campuses: [
+				...campuses,
+				{ campusName, campusPhone: formattedPhone.value },
+			],
+		});
 		setCampusName("");
 		setCampusPhone("");
 		setCampusSaved(true);
@@ -61,6 +86,23 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Campuses", "knight-finder")}>
+					{errors.campuses.length > 0 && (
+						<>
+							{errors.campuses.map((error) => (
+								<PanelRow>
+									<div className="knight-finder__editor__panel__error with-icon">
+										<Icon
+											className="knight-finder__icon"
+											icon="warning"
+											size="14"
+										/>
+										<span>{error}</span>
+									</div>
+								</PanelRow>
+							))}
+						</>
+					)}
+
 					{campusSaved && (
 						<Snackbar>
 							Don't forget to select "Update" on this page as well!
@@ -110,11 +152,14 @@ const CampusForm = ({
 						label={__("Name", "knight-finder")}
 						value={campusName}
 						onChange={(value) => setCampusName(value)}
+						required
 					/>
 					<TextControl
 						label={__("Phone", "knight-finder")}
 						value={campusPhone}
 						onChange={(value) => setCampusPhone(value)}
+						type="tel"
+						required
 					/>
 					<Button
 						variant="primary"

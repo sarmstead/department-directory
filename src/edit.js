@@ -24,6 +24,7 @@ import {
 	ToggleControl,
 } from "@wordpress/components";
 import Status from "./components/Status";
+import Campuses from "./components/Campuses";
 import { useEffect, useState } from "react";
 
 /**
@@ -47,7 +48,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusPhone, setCampusPhone] = useState("");
 	const [campusToggle, setCampusToggle] = useState(false);
 	const [campusSaved, setCampusSaved] = useState(false);
-	const { isActive, campuses } = attributes;
+	const { campuses, isActive } = attributes;
 
 	useEffect(() => {
 		if (campusSaved) {
@@ -156,6 +157,7 @@ export default function Edit({ attributes, setAttributes }) {
 			</InspectorControls>
 			<div {...useBlockProps()}>
 				<Status isActive={isActive} />
+				<Campuses campuses={campuses} />
 			</div>
 		</>
 	);

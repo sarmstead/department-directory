@@ -15,6 +15,10 @@
 		"campuses": {
 			"type": "array",
 			"default": []
+		},
+		"contacts": {
+			"type": "array",
+			"default": []
 		}
 	},
 	"supports": {

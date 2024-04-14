@@ -23,6 +23,9 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusPhone, setCampusPhone] = useState("");
 	const [campusToggle, setCampusToggle] = useState(false);
 	const [campusSaved, setCampusSaved] = useState(false);
+
+	const [contactToggle, setContactToggle] = useState(false);
+
 	const errorShape = { campuses: [] };
 	const [errors, setError] = useState(errorShape);
 	const { campuses, isActive } = attributes;
@@ -73,6 +76,8 @@ export default function Edit({ attributes, setAttributes }) {
 		setCampusSaved(true);
 	};
 
+	const toggleContact = () => setContactToggle(!contactToggle);
+
 	return (
 		<>
 			<InspectorControls>
@@ -85,7 +90,7 @@ export default function Edit({ attributes, setAttributes }) {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__("Campuses", "knight-finder")}>
+				<PanelBody title={__("Campuses", "knight-finder")} initialOpen={false}>
 					{errors.campuses.length > 0 && (
 						<>
 							{errors.campuses.map((error) => (
@@ -108,6 +113,7 @@ export default function Edit({ attributes, setAttributes }) {
 							Don't forget to select "Update" on this page as well!
 						</Snackbar>
 					)}
+
 					{!campusToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleCampus}>
@@ -115,6 +121,7 @@ export default function Edit({ attributes, setAttributes }) {
 							</Button>
 						</PanelRow>
 					)}
+
 					{campusToggle && (
 						<CampusForm
 							campusName={campusName}
@@ -126,6 +133,18 @@ export default function Edit({ attributes, setAttributes }) {
 					)}
 					{campuses.length > 0 && (
 						<PanelCampusList campuses={campuses} removeCampus={removeCampus} />
+					)}
+				</PanelBody>
+				<PanelBody
+					title={__("Secondary Contacts", "knight-finder")}
+					initialOpen={false}
+				>
+					{!contactToggle && (
+						<PanelRow>
+							<Button variant="secondary" onClick={toggleContact}>
+								Add a contact
+							</Button>
+						</PanelRow>
 					)}
 				</PanelBody>
 			</InspectorControls>

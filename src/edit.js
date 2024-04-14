@@ -35,6 +35,8 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const { campuses, contacts, isActive } = attributes;
 
+	const reminderMessage = `Don't forget to select "Update" on this page as well!`;
+
 	useEffect(() => {
 		if (campusSaved) {
 			setTimeout(() => {
@@ -116,6 +118,14 @@ export default function Edit({ attributes, setAttributes }) {
 		setContactSaved(true);
 	};
 
+	const removeContact = (contactForDeletion) => {
+		const newList = contacts.filter(
+			(contact) => contact !== contactForDeletion,
+		);
+		setAttributes({ contacts: newList });
+		setContactSaved(true);
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -146,11 +156,7 @@ export default function Edit({ attributes, setAttributes }) {
 						</>
 					)}
 
-					{campusSaved && (
-						<Snackbar>
-							Don't forget to select "Update" on this page as well!
-						</Snackbar>
-					)}
+					{campusSaved && <Snackbar>{reminderMessage}</Snackbar>}
 
 					{!campusToggle && (
 						<PanelRow>
@@ -195,6 +201,8 @@ export default function Edit({ attributes, setAttributes }) {
 						</>
 					)}
 
+					{contactSaved && <Snackbar>{reminderMessage}</Snackbar>}
+
 					{!contactToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleContact}>
@@ -212,6 +220,13 @@ export default function Edit({ attributes, setAttributes }) {
 							setContactEmail={setContactEmail}
 							setContactName={setContactName}
 							setContactPhone={setContactPhone}
+						/>
+					)}
+
+					{contacts.length > 0 && (
+						<PanelContactList
+							contacts={contacts}
+							removeContact={removeContact}
 						/>
 					)}
 				</PanelBody>
@@ -263,17 +278,17 @@ const CampusForm = ({
 
 const PanelCampusList = ({ campuses, removeCampus }) => {
 	return (
-		<div className="knight-finder__editor__panel__campus-list">
+		<div className="knight-finder__editor__panel__record-list">
 			<h2>Added Campuses</h2>
 			<ul>
 				{campuses.map((campus) => {
 					return (
 						<li key={campus.campusName}>
 							<div>
-								<h3 className="knight-finder__editor__panel__campus-list__attribute">
+								<h3 className="knight-finder__editor__panel__record-list__attribute">
 									{campus.campusName}&nbsp;Campus
 								</h3>
-								<p className="knight-finder__editor__panel__campus-list__attribute">
+								<p className="knight-finder__editor__panel__record-list__attribute">
 									<Icon size="12" icon="smartphone" />
 									{campus.campusPhone}
 								</p>
@@ -336,5 +351,42 @@ const ContactsForm = ({
 				</CardBody>
 			</Card>
 		</PanelRow>
+	);
+};
+
+const PanelContactList = ({ contacts, removeContact }) => {
+	return (
+		<div className="knight-finder__editor__panel__record-list">
+			<h2>Added Contacts</h2>
+			<ul>
+				{contacts.map((contact) => {
+					return (
+						<li key={contact.contactName}>
+							<div>
+								<h3 className="knight-finder__editor__panel__record-list__attribute">
+									{contact.contactName}
+								</h3>
+								<p className="knight-finder__editor__panel__record-list__attribute">
+									<Icon size="12" icon="smartphone" />
+									{contact.contactPhone}
+								</p>
+								<p className="knight-finder__editor__panel__record-list__attribute">
+									<Icon size="12" icon="email" />
+									{contact.contactEmail}
+								</p>
+							</div>
+							<Button
+								icon="remove"
+								iconSize="14"
+								title="Remove contact"
+								size="small"
+								isDestructive="true"
+								onClick={() => removeContact(contact)}
+							></Button>
+						</li>
+					);
+				})}
+			</ul>
+		</div>
 	);
 };

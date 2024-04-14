@@ -1,16 +1,5 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
+import { useEffect, useState } from "react";
 import { __ } from "@wordpress/i18n";
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
 import {
 	Button,
@@ -23,26 +12,11 @@ import {
 	TextControl,
 	ToggleControl,
 } from "@wordpress/components";
+
 import Status from "./components/Status";
 import Campuses from "./components/Campuses";
-import { useEffect, useState } from "react";
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 import "./editor.scss";
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
 export default function Edit({ attributes, setAttributes }) {
 	const [campusName, setCampusName] = useState("");
 	const [campusPhone, setCampusPhone] = useState("");
@@ -71,6 +45,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const removeCampus = (campusForDeletion) => {
 		const newList = campuses.filter((campus) => campus !== campusForDeletion);
 		setAttributes({ campuses: newList });
+		setCampusSaved(true);
 	};
 
 	return (
@@ -99,29 +74,13 @@ export default function Edit({ attributes, setAttributes }) {
 						</PanelRow>
 					)}
 					{campusToggle && (
-						<PanelRow>
-							<Card>
-								<CardBody>
-									<TextControl
-										label={__("Name", "knight-finder")}
-										value={campusName}
-										onChange={(value) => setCampusName(value)}
-									/>
-									<TextControl
-										label={__("Phone", "knight-finder")}
-										value={campusPhone}
-										onChange={(value) => setCampusPhone(value)}
-									/>
-									<Button
-										variant="primary"
-										onClick={saveCampus}
-										disabled={campusName.length < 1 || campusPhone.length < 1}
-									>
-										Save Campus
-									</Button>
-								</CardBody>
-							</Card>
-						</PanelRow>
+						<CampusForm
+							campusName={campusName}
+							campusPhone={campusPhone}
+							saveCampus={saveCampus}
+							setCampusName={setCampusName}
+							setCampusPhone={setCampusPhone}
+						/>
 					)}
 					{campuses.length > 0 && (
 						<div className="knight-finder__editor__panel__campus-list">
@@ -162,3 +121,37 @@ export default function Edit({ attributes, setAttributes }) {
 		</>
 	);
 }
+
+const CampusForm = ({
+	campusName,
+	campusPhone,
+	saveCampus,
+	setCampusName,
+	setCampusPhone,
+}) => {
+	return (
+		<PanelRow>
+			<Card>
+				<CardBody>
+					<TextControl
+						label={__("Name", "knight-finder")}
+						value={campusName}
+						onChange={(value) => setCampusName(value)}
+					/>
+					<TextControl
+						label={__("Phone", "knight-finder")}
+						value={campusPhone}
+						onChange={(value) => setCampusPhone(value)}
+					/>
+					<Button
+						variant="primary"
+						onClick={saveCampus}
+						disabled={campusName.length < 1 || campusPhone.length < 1}
+					>
+						Save Campus
+					</Button>
+				</CardBody>
+			</Card>
+		</PanelRow>
+	);
+};

@@ -83,34 +83,7 @@ export default function Edit({ attributes, setAttributes }) {
 						/>
 					)}
 					{campuses.length > 0 && (
-						<div className="knight-finder__editor__panel__campus-list">
-							<h2>Added Campuses</h2>
-							<ul>
-								{campuses.map((campus) => {
-									return (
-										<li key={campus.campusName}>
-											<div>
-												<h3 className="knight-finder__editor__panel__campus-list__attribute">
-													{campus.campusName}&nbsp;Campus
-												</h3>
-												<p className="knight-finder__editor__panel__campus-list__attribute">
-													<Icon size="12" icon="smartphone" />
-													{campus.campusPhone}
-												</p>
-											</div>
-											<Button
-												icon="remove"
-												iconSize="14"
-												title="Remove campus"
-												size="small"
-												isDestructive="true"
-												onClick={() => removeCampus(campus)}
-											></Button>
-										</li>
-									);
-								})}
-							</ul>
-						</div>
+						<PanelCampusList campuses={campuses} removeCampus={removeCampus} />
 					)}
 				</PanelBody>
 			</InspectorControls>
@@ -153,5 +126,38 @@ const CampusForm = ({
 				</CardBody>
 			</Card>
 		</PanelRow>
+	);
+};
+
+const PanelCampusList = ({ campuses, removeCampus }) => {
+	return (
+		<div className="knight-finder__editor__panel__campus-list">
+			<h2>Added Campuses</h2>
+			<ul>
+				{campuses.map((campus) => {
+					return (
+						<li key={campus.campusName}>
+							<div>
+								<h3 className="knight-finder__editor__panel__campus-list__attribute">
+									{campus.campusName}&nbsp;Campus
+								</h3>
+								<p className="knight-finder__editor__panel__campus-list__attribute">
+									<Icon size="12" icon="smartphone" />
+									{campus.campusPhone}
+								</p>
+							</div>
+							<Button
+								icon="remove"
+								iconSize="14"
+								title="Remove campus"
+								size="small"
+								isDestructive="true"
+								onClick={() => removeCampus(campus)}
+							></Button>
+						</li>
+					);
+				})}
+			</ul>
+		</div>
 	);
 };

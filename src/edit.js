@@ -24,11 +24,16 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusToggle, setCampusToggle] = useState(false);
 	const [campusSaved, setCampusSaved] = useState(false);
 
+	const [contactName, setContactName] = useState("");
+	const [contactPhone, setContactPhone] = useState("");
+	const [contactEmail, setContactEmail] = useState("");
 	const [contactToggle, setContactToggle] = useState(false);
+	const [contactSaved, setContactSaved] = useState(false);
 
-	const errorShape = { campuses: [] };
-	const [errors, setError] = useState(errorShape);
-	const { campuses, isActive } = attributes;
+	const [campusErrors, setCampusErrors] = useState([]);
+	const [contactErrors, setContactErrors] = useState([]);
+
+	const { campuses, contacts, isActive } = attributes;
 
 	useEffect(() => {
 		if (campusSaved) {
@@ -38,21 +43,26 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	}, [campusSaved]);
 
+	useEffect(() => {
+		if (contactSaved) {
+			setTimeout(() => {
+				setContactSaved(false);
+			}, 5000);
+		}
+	}, [contactSaved]);
+
 	const toggleCampus = () => setCampusToggle(!campusToggle);
 
 	const saveCampus = () => {
 		const formattedPhone = formatPhone(campusPhone);
 
 		if (formattedPhone.error) {
-			setError((existingErrors) => {
-				return {
-					...existingErrors,
-					campuses: [...existingErrors.campuses, formattedPhone.code],
-				};
+			setCampusErrors((existingErrors) => {
+				return [...existingErrors, formattedPhone.code];
 			});
 
 			setTimeout(() => {
-				setError(errorShape);
+				setCampusErrors([]);
 			}, 5000);
 
 			return;
@@ -78,6 +88,34 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const toggleContact = () => setContactToggle(!contactToggle);
 
+	const saveContact = () => {
+		const formattedPhone = formatPhone(contactPhone);
+
+		if (formattedPhone.error) {
+			setContactErrors((existingErrors) => {
+				return [...existingErrors, formattedPhone.code];
+			});
+
+			setTimeout(() => {
+				setContactErrors([]);
+			}, 5000);
+
+			return;
+		}
+
+		toggleContact();
+		setAttributes({
+			contacts: [
+				...contacts,
+				{ contactName, contactEmail, contactPhone: formattedPhone.value },
+			],
+		});
+		setContactName("");
+		setContactPhone("");
+		setContactEmail("");
+		setContactSaved(true);
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -91,9 +129,9 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody title={__("Campuses", "knight-finder")} initialOpen={false}>
-					{errors.campuses.length > 0 && (
+					{campusErrors.length > 0 && (
 						<>
-							{errors.campuses.map((error) => (
+							{campusErrors.map((error) => (
 								<PanelRow>
 									<div className="knight-finder__editor__panel__error with-icon">
 										<Icon
@@ -131,6 +169,7 @@ export default function Edit({ attributes, setAttributes }) {
 							setCampusPhone={setCampusPhone}
 						/>
 					)}
+
 					{campuses.length > 0 && (
 						<PanelCampusList campuses={campuses} removeCampus={removeCampus} />
 					)}
@@ -139,12 +178,41 @@ export default function Edit({ attributes, setAttributes }) {
 					title={__("Secondary Contacts", "knight-finder")}
 					initialOpen={false}
 				>
+					{contactErrors.length > 0 && (
+						<>
+							{contactErrors.map((error) => (
+								<PanelRow>
+									<div className="knight-finder__editor__panel__error with-icon">
+										<Icon
+											className="knight-finder__icon"
+											icon="warning"
+											size="14"
+										/>
+										<span>{error}</span>
+									</div>
+								</PanelRow>
+							))}
+						</>
+					)}
+
 					{!contactToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleContact}>
 								Add a contact
 							</Button>
 						</PanelRow>
+					)}
+
+					{contactToggle && (
+						<ContactsForm
+							contactEmail={contactEmail}
+							contactName={contactName}
+							contactPhone={contactPhone}
+							saveContact={saveContact}
+							setContactEmail={setContactEmail}
+							setContactName={setContactName}
+							setContactPhone={setContactPhone}
+						/>
 					)}
 				</PanelBody>
 			</InspectorControls>
@@ -223,5 +291,50 @@ const PanelCampusList = ({ campuses, removeCampus }) => {
 				})}
 			</ul>
 		</div>
+	);
+};
+
+const ContactsForm = ({
+	contactEmail,
+	contactName,
+	contactPhone,
+	saveContact,
+	setContactEmail,
+	setContactName,
+	setContactPhone,
+}) => {
+	return (
+		<PanelRow>
+			<Card>
+				<CardBody>
+					<TextControl
+						label={__("Name", "knight-finder")}
+						value={contactName}
+						onChange={(value) => setContactName(value)}
+						required
+					/>
+					<TextControl
+						label={__("Phone", "knight-finder")}
+						value={contactPhone}
+						onChange={(value) => setContactPhone(value)}
+						type="tel"
+						required
+					/>
+					<TextControl
+						label={__("Email", "knight-finder")}
+						value={contactEmail}
+						onChange={(value) => setContactEmail(value)}
+						required
+					/>
+					<Button
+						variant="primary"
+						onClick={saveContact}
+						disabled={contactName.length < 1 || contactPhone.length < 1}
+					>
+						Save Contact
+					</Button>
+				</CardBody>
+			</Card>
+		</PanelRow>
 	);
 };

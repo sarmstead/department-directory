@@ -14,7 +14,7 @@ export default function Campuses({ campuses }) {
 						<tbody>
 							{campuses.map((campus) => {
 								return (
-									<tr>
+									<tr key={campus.campusName}>
 										<td>{campus.campusName}</td>
 										<td>{campus.campusPhone}</td>
 									</tr>

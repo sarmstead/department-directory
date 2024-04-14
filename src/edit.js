@@ -15,6 +15,7 @@ import {
 
 import Status from "./components/Status";
 import Campuses from "./components/Campuses";
+import Contacts from "./components/Contacts";
 import "./editor.scss";
 import { formatPhone } from "./utils";
 
@@ -234,6 +235,7 @@ export default function Edit({ attributes, setAttributes }) {
 			<div {...useBlockProps()}>
 				<Status isActive={isActive} />
 				<Campuses campuses={campuses} />
+				<Contacts contacts={contacts} />
 			</div>
 		</>
 	);

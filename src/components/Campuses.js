@@ -1,4 +1,14 @@
 export default function Campuses({ campuses }) {
+	const stylePhone = (number, isExtension = false) => {
+		const beforeExtension = number.slice(0, 10);
+		const extension = number.slice(10);
+
+		if (isExtension) {
+			return extension;
+		}
+
+		return beforeExtension;
+	};
 	return (
 		<>
 			{campuses.length > 0 && (
@@ -16,7 +26,10 @@ export default function Campuses({ campuses }) {
 								return (
 									<tr key={campus.campusName}>
 										<td>{campus.campusName}</td>
-										<td>{campus.campusPhone}</td>
+										<td>
+											{stylePhone(campus.campusPhone)}
+											<strong>{stylePhone(campus.campusPhone, true)}</strong>
+										</td>
 									</tr>
 								);
 							})}

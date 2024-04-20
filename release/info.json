@@ -5,7 +5,7 @@
 	"author_profile": "https://sunjayarmstead.com",
 	"download_link": "https://github.com/sarmstead/knight-finder/blob/main/release/knight-finder.zip",
 	"last_updated": "2021-01-30 02:10:00",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"sections": {
 		"description": "A lightweight block for displaying department information"
 	}

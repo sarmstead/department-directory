@@ -22,6 +22,10 @@
 		},
 		"notes": {
 			"type":"string"
+		},
+		"showNotes": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"supports": {

@@ -134,14 +134,14 @@ export default function Edit({ attributes, setAttributes }) {
 				<PanelBody title={__("Settings", "knight-finder")}>
 					<PanelRow>
 						<ToggleControl
-							label={__("Is active?", "knight-finder")}
+							label={__(`${isActive ? "Active" : "Inactive"}`, "knight-finder")}
 							checked={!!isActive}
 							onChange={() => setAttributes({ isActive: !isActive })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__("Include notes?", "knight-finder")}
+							label={__("Notes", "knight-finder")}
 							checked={!!showNotes}
 							onChange={() => setAttributes({ showNotes: !showNotes })}
 						/>

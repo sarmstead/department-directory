@@ -134,12 +134,12 @@ export default function Edit({ attributes, setAttributes }) {
 	const clearForm = (context) => {
 		switch (context.toLowerCase()) {
 			case "campus":
-				toggleCampus();
+				setCampusToggle(false);
 				setCampusName("");
 				setCampusPhone("");
 				break;
 			case "contact":
-				toggleContact();
+				setContactToggle(false);
 				setContactName("");
 				setContactPhone("");
 				setContactEmail("");

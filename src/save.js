@@ -3,15 +3,17 @@ import { useBlockProps } from "@wordpress/block-editor";
 import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
+import Notes from "./components/Notes";
 
 export default function save({ attributes }) {
-	const { campuses, contacts, isActive } = attributes;
+	const { campuses, contacts, isActive, notes } = attributes;
 
 	return (
 		<div {...useBlockProps.save()}>
 			<Status isActive={isActive} />
 			<Campuses campuses={campuses} />
 			<Contacts contacts={contacts} />
+			<Notes notes={notes} context="save" />
 		</div>
 	);
 }

@@ -19,6 +19,9 @@
 		"contacts": {
 			"type": "array",
 			"default": []
+		},
+		"notes": {
+			"type":"string"
 		}
 	},
 	"supports": {

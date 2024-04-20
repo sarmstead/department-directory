@@ -94,4 +94,21 @@
 			gap: 8px;
 		}
 	}
+
+	&__notes {
+		h3 {
+			margin-top: 0;
+			margin-bottom: 8px;
+		}
+
+		&__rich-text {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			p {
+				margin: 0;
+			}
+		}
+	}
 }

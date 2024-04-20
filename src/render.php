@@ -30,7 +30,8 @@ $allowed_html = [
 	'section' => [
 		'class' => []
 	],
-	'article' => []
+	'article' => [],
+	'em' => []
 ];
 
 echo wp_kses($content, $allowed_html);

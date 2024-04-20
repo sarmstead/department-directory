@@ -16,6 +16,7 @@ import {
 import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
+import Notes from "./components/Notes";
 import "./editor.scss";
 import { formatPhone } from "./utils";
 
@@ -34,7 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusErrors, setCampusErrors] = useState([]);
 	const [contactErrors, setContactErrors] = useState([]);
 
-	const { campuses, contacts, isActive } = attributes;
+	const { campuses, contacts, isActive, notes } = attributes;
 
 	const reminderMessage = `Don't forget to select "Update" on this page as well!`;
 
@@ -236,6 +237,7 @@ export default function Edit({ attributes, setAttributes }) {
 				<Status isActive={isActive} />
 				<Campuses campuses={campuses} />
 				<Contacts contacts={contacts} />
+				<Notes setAttributes={setAttributes} notes={notes} context="edit" />
 			</div>
 		</>
 	);

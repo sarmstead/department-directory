@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       Knight Finder
+ * Plugin Name:       KnightFinder
  * Plugin URI:        https://sunjayarmstead.com
- * Description:       A lightweight block for finding departments.
+ * Description:       A lightweight block for displaying department information.
  * Requires at least: 6.1
  * Requires PHP:      7.0
  * Version:           0.1.0

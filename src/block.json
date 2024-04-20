@@ -3,10 +3,9 @@
 	"apiVersion": 3,
 	"name": "knight-finder/knight-finder",
 	"version": "0.1.0",
-	"title": "Knight Finder",
+	"title": "KnightFinder",
 	"category": "widgets",
-	"icon": "clipboard",
-	"description": "A lightweight block for finding departments.",
+	"description": "A lightweight block for displaying department information.",
 	"example": {},
 	"attributes": {
 		"isActive": {

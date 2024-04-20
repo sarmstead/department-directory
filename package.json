@@ -1,7 +1,7 @@
 {
 	"name": "knight-finder",
 	"version": "0.1.0",
-	"description": "A lightweight block for finding departments.",
+	"description": "A lightweight block for displaying department information.",
 	"author": "Sunjay Armstead",
 	"license": "GPL-2.0-or-later",
 	"homepage": "https://sunjayarmstead.com",

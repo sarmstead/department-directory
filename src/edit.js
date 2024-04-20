@@ -58,7 +58,10 @@ export default function Edit({ attributes, setAttributes }) {
 	const toggleCampus = () => setCampusToggle(!campusToggle);
 
 	const saveCampus = () => {
-		const formattedPhone = formatPhone(campusPhone);
+		const phoneIsInternational = campusPhone.length >= 15;
+		const formattedPhone = phoneIsInternational
+			? { error: false, code: "SUCCESS", value: campusPhone }
+			: formatPhone(campusPhone);
 
 		if (formattedPhone.error) {
 			setCampusErrors((existingErrors) => {
@@ -170,7 +173,7 @@ export default function Edit({ attributes, setAttributes }) {
 					{!campusToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleCampus}>
-								Add a campus
+								Add Campus
 							</Button>
 						</PanelRow>
 					)}
@@ -215,7 +218,7 @@ export default function Edit({ attributes, setAttributes }) {
 					{!contactToggle && (
 						<PanelRow>
 							<Button variant="secondary" onClick={toggleContact}>
-								Add a contact
+								Add Contact
 							</Button>
 						</PanelRow>
 					)}

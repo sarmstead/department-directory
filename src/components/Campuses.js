@@ -27,8 +27,16 @@ export default function Campuses({ campuses }) {
 									<tr key={campus.campusName}>
 										<td>{campus.campusName}</td>
 										<td>
-											{stylePhone(campus.campusPhone)}
-											<strong>{stylePhone(campus.campusPhone, true)}</strong>
+											{campus.campusPhone.length >= 15 ? (
+												<>{campus.campusPhone}</>
+											) : (
+												<>
+													{stylePhone(campus.campusPhone)}
+													<strong>
+														{stylePhone(campus.campusPhone, true)}
+													</strong>
+												</>
+											)}
 										</td>
 									</tr>
 								);

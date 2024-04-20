@@ -131,6 +131,29 @@ export default function Edit({ attributes, setAttributes }) {
 		setContactSaved(true);
 	};
 
+	const clearForm = (context) => {
+		switch (context.toLowerCase()) {
+			case "campus":
+				toggleCampus();
+				setCampusName("");
+				setCampusPhone("");
+				break;
+			case "contact":
+				toggleContact();
+				setContactName("");
+				setContactPhone("");
+				setContactEmail("");
+				break;
+		}
+	};
+
+	const handlePanelToggle = (nextValue, context) => {
+		if (!nextValue) {
+			clearForm(context);
+		}
+		return;
+	};
+
 	return (
 		<>
 			<InspectorControls>
@@ -150,7 +173,11 @@ export default function Edit({ attributes, setAttributes }) {
 						/>
 					</PanelRow>
 				</PanelBody>
-				<PanelBody title={__("Campuses", "knight-finder")} initialOpen={false}>
+				<PanelBody
+					title={__("Campuses", "knight-finder")}
+					initialOpen={false}
+					onToggle={(nextValue) => handlePanelToggle(nextValue, "campus")}
+				>
 					{campusErrors.length > 0 && (
 						<>
 							{campusErrors.map((error) => (
@@ -185,6 +212,7 @@ export default function Edit({ attributes, setAttributes }) {
 							saveCampus={saveCampus}
 							setCampusName={setCampusName}
 							setCampusPhone={setCampusPhone}
+							clearForm={clearForm}
 						/>
 					)}
 
@@ -195,6 +223,7 @@ export default function Edit({ attributes, setAttributes }) {
 				<PanelBody
 					title={__("Secondary Contacts", "knight-finder")}
 					initialOpen={false}
+					onToggle={(nextValue) => handlePanelToggle(nextValue, "contact")}
 				>
 					{contactErrors.length > 0 && (
 						<>
@@ -232,6 +261,7 @@ export default function Edit({ attributes, setAttributes }) {
 							setContactEmail={setContactEmail}
 							setContactName={setContactName}
 							setContactPhone={setContactPhone}
+							clearForm={clearForm}
 						/>
 					)}
 
@@ -261,6 +291,7 @@ const CampusForm = ({
 	saveCampus,
 	setCampusName,
 	setCampusPhone,
+	clearForm,
 }) => {
 	return (
 		<PanelRow>
@@ -285,6 +316,9 @@ const CampusForm = ({
 						disabled={campusName.length < 1 || campusPhone.length < 1}
 					>
 						Save Campus
+					</Button>
+					<Button onClick={() => clearForm("campus")} isDestructive={true}>
+						Cancel
 					</Button>
 				</CardBody>
 			</Card>
@@ -333,6 +367,7 @@ const ContactsForm = ({
 	setContactEmail,
 	setContactName,
 	setContactPhone,
+	clearForm,
 }) => {
 	return (
 		<PanelRow>
@@ -363,6 +398,9 @@ const ContactsForm = ({
 						disabled={contactName.length < 1 || contactPhone.length < 1}
 					>
 						Save Contact
+					</Button>
+					<Button onClick={() => clearForm("contact")} isDestructive={true}>
+						Cancel
 					</Button>
 				</CardBody>
 			</Card>

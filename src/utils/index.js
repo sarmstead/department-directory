@@ -1,4 +1,6 @@
 export const formatPhone = (phone) => {
+	if (phone === "N/A") return { value: phone, code: "SUCCESS", error: false }
+
 	const strippedNumber = phone
 		.replaceAll("(", "")
 		.replaceAll(")", "")

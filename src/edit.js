@@ -21,19 +21,19 @@ import "./editor.scss";
 import { formatPhone } from "./utils";
 
 export default function Edit({ attributes, setAttributes }) {
-	const [campusName, setCampusName] = useState("");
-	const [campusPhone, setCampusPhone] = useState("");
-	const [campusToggle, setCampusToggle] = useState(false);
-	const [campusSaved, setCampusSaved] = useState(false);
+	const { campuses, contacts, isActive, notes, showNotes } = attributes;
+
+	const [campusList, setCampusList] = useState(campuses);
 
 	const [contactName, setContactName] = useState("");
 	const [contactEmail, setContactEmail] = useState("");
 	const [contactToggle, setContactToggle] = useState(false);
+
 	const [contactSaved, setContactSaved] = useState(false);
+	const [campusSaved, setCampusSaved] = useState(false);
 
 	const [campusErrors, setCampusErrors] = useState([]);
 
-	const { campuses, contacts, isActive, notes, showNotes } = attributes;
 
 	const reminderMessage = `Don't forget to select "Update" or "Publish" on this page as well!`;
 
@@ -53,13 +53,20 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 	}, [contactSaved]);
 
-	const toggleCampus = () => setCampusToggle(!campusToggle);
+	const updateCampusList = (value, campusName) => {
+		const mutatedArr = [...campusList]
+		const targetCampusIndex = mutatedArr.findIndex(({campusName}) => campusName === campusName)
+		mutatedArr[targetCampusIndex] = { campusName, campusPhone: value}
 
-	const saveCampus = () => {
-		const phoneIsInternational = campusPhone.length >= 15;
+		setCampusList(mutatedArr)
+	}
+
+	const saveCampus = (id) => {
+		const targetCampus = campusList.find(({campusName}) => campusName === id)
+		const phoneIsInternational = targetCampus.campusPhone.length >= 15;
 		const formattedPhone = phoneIsInternational
-			? { error: false, code: "SUCCESS", value: campusPhone }
-			: formatPhone(campusPhone);
+			? { error: false, code: "SUCCESS", value: targetCampus.campusPhone }
+			: formatPhone(targetCampus.campusPhone);
 
 		if (formattedPhone.error) {
 			setCampusErrors((existingErrors) => {
@@ -73,22 +80,12 @@ export default function Edit({ attributes, setAttributes }) {
 			return;
 		}
 
-		toggleCampus();
-		setAttributes({
-			campuses: [
-				...campuses,
-				{ campusName, campusPhone: formattedPhone.value },
-			],
-		});
-		setCampusName("");
-		setCampusPhone("");
-		setCampusSaved(true);
-	};
+		const mutatedArr = [...campuses]
+		const targetCampusIndex = mutatedArr.findIndex(({campusName}) => campusName === id)
+		mutatedArr[targetCampusIndex] = { campusName: id, campusPhone: formattedPhone.value}
 
-	const removeCampus = (campusForDeletion) => {
-		const newList = campuses.filter((campus) => campus !== campusForDeletion);
-		setAttributes({ campuses: newList });
-		setCampusSaved(true);
+		setAttributes({ campuses: mutatedArr });
+		setCampusSaved(true)
 	};
 
 	const toggleContact = () => setContactToggle(!contactToggle);
@@ -156,9 +153,10 @@ export default function Edit({ attributes, setAttributes }) {
 					</PanelRow>
 				</PanelBody>
 				<PanelBody
-					title={__("Campuses", "department-directory")}
+					title={__("Campus Phone Numbers", "department-directory")}
 					initialOpen={false}
 					onToggle={(nextValue) => handlePanelToggle(nextValue, "campus")}
+					className="department-listing__editor__panel__campuses"
 				>
 					{campusErrors.length > 0 && (
 						<>
@@ -176,31 +174,35 @@ export default function Edit({ attributes, setAttributes }) {
 							))}
 						</>
 					)}
-
 					{campusSaved && <Snackbar>{reminderMessage}</Snackbar>}
 
-					{!campusToggle && (
-						<PanelRow>
-							<Button variant="secondary" onClick={toggleCampus}>
-								Add Campus
-							</Button>
-						</PanelRow>
-					)}
+					<CampusForm
+						campusList={campusList}
+						name="Florham"
+						saveCampus={saveCampus}
+						updateCampusList={updateCampusList}
+					/>
 
-					{campusToggle && (
-						<CampusForm
-							campusName={campusName}
-							campusPhone={campusPhone}
-							saveCampus={saveCampus}
-							setCampusName={setCampusName}
-							setCampusPhone={setCampusPhone}
-							clearForm={clearForm}
-						/>
-					)}
+					<CampusForm
+						campusList={campusList}
+						name="Metropolitan"
+						saveCampus={saveCampus}
+						updateCampusList={updateCampusList}
+					/>
 
-					{campuses.length > 0 && (
-						<PanelCampusList campuses={campuses} removeCampus={removeCampus} />
-					)}
+					<CampusForm
+						campusList={campusList}
+						name="Vancouver"
+						saveCampus={saveCampus}
+						updateCampusList={updateCampusList}
+					/>
+
+					<CampusForm
+						campusList={campusList}
+						name="Wroxton"
+						saveCampus={saveCampus}
+						updateCampusList={updateCampusList}
+					/>
 				</PanelBody>
 				<PanelBody
 					title={__("Supervisory Contacts", "department-directory")}
@@ -248,77 +250,27 @@ export default function Edit({ attributes, setAttributes }) {
 	);
 }
 
-const CampusForm = ({
-	campusName,
-	campusPhone,
-	saveCampus,
-	setCampusName,
-	setCampusPhone,
-	clearForm,
-}) => {
+const CampusForm = ({ campusList, name, saveCampus, updateCampusList }) => {
 	return (
 		<PanelRow>
 			<Card>
 				<CardBody>
 					<TextControl
-						label={__("Name", "department-directory")}
-						value={campusName}
-						onChange={(value) => setCampusName(value)}
-						required
-					/>
-					<TextControl
-						label={__("Phone", "department-directory")}
-						value={campusPhone}
-						onChange={(value) => setCampusPhone(value)}
+						label={__(`${name} Campus`, "department-directory")}
+						value={campusList.find(({campusName}) => campusName === name).campusPhone}
+						onChange={(value) => updateCampusList(value, name)}
 						type="tel"
 						required
 					/>
 					<Button
 						variant="primary"
-						onClick={saveCampus}
-						disabled={campusName.length < 1 || campusPhone.length < 1}
+						onClick={() => saveCampus(name)}
 					>
 						Save Campus
-					</Button>
-					<Button onClick={() => clearForm("campus")} isDestructive={true}>
-						Cancel
 					</Button>
 				</CardBody>
 			</Card>
 		</PanelRow>
-	);
-};
-
-const PanelCampusList = ({ campuses, removeCampus }) => {
-	return (
-		<div className="department-listing__editor__panel__record-list">
-			<h2>Added Campuses</h2>
-			<ul>
-				{campuses.map((campus) => {
-					return (
-						<li key={campus.campusName}>
-							<div>
-								<h3 className="department-listing__editor__panel__record-list__attribute">
-									{campus.campusName}&nbsp;Campus
-								</h3>
-								<p className="department-listing__editor__panel__record-list__attribute">
-									<Icon size="12" icon="smartphone" />
-									{campus.campusPhone}
-								</p>
-							</div>
-							<Button
-								icon="remove"
-								iconSize="14"
-								title="Remove campus"
-								size="small"
-								isDestructive="true"
-								onClick={() => removeCampus(campus)}
-							></Button>
-						</li>
-					);
-				})}
-			</ul>
-		</div>
 	);
 };
 
@@ -365,17 +317,17 @@ const ContactsForm = ({
 
 const PanelContactList = ({ contacts, removeContact }) => {
 	return (
-		<div className="department-listing__editor__panel__record-list">
+		<div className="department-listing__editor__panel__contacts">
 			<h2>Added Contacts</h2>
 			<ul>
 				{contacts.map((contact) => {
 					return (
 						<li key={contact.contactName}>
 							<div>
-								<h3 className="department-listing__editor__panel__record-list__attribute">
+								<h3 className="department-listing__editor__panel__contacts__attribute">
 									{contact.contactName}
 								</h3>
-								<p className="department-listing__editor__panel__record-list__attribute">
+								<p className="department-listing__editor__panel__contacts__attribute">
 									<Icon size="12" icon="email" />
 									{contact.contactEmail}
 								</p>

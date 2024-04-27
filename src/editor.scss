@@ -1,7 +1,13 @@
 .department-listing {
 	&__editor {
 		&__panel {
-			&__record-list {
+			&__campuses {
+				.components-panel__row:not(:last-child) {
+					margin-bottom: 16px;
+				}
+			}
+
+			&__contacts {
 				h2 {
 					margin-bottom: 8px;
 				}
@@ -51,7 +57,7 @@
 				font-size: 14px;
 
 				&.with-icon {
-					.knight-finder__icon {
+					.department-listing__icon {
 						margin-right: 4px;
 						line-height: 17px;
 					}

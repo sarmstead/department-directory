@@ -13,7 +13,12 @@
 		},
 		"campuses": {
 			"type": "array",
-			"default": []
+			"default": [
+				{ "campusName": "Florham", "campusPhone": "N/A" },
+				{ "campusName": "Metropolitan", "campusPhone": "N/A" },
+				{ "campusName": "Vancouver", "campusPhone": "N/A" },
+				{ "campusName": "Wroxton", "campusPhone": "N/A" }
+			]
 		},
 		"contacts": {
 			"type": "array",

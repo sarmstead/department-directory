@@ -27,17 +27,15 @@ export default function Edit({ attributes, setAttributes }) {
 	const [campusSaved, setCampusSaved] = useState(false);
 
 	const [contactName, setContactName] = useState("");
-	const [contactPhone, setContactPhone] = useState("");
 	const [contactEmail, setContactEmail] = useState("");
 	const [contactToggle, setContactToggle] = useState(false);
 	const [contactSaved, setContactSaved] = useState(false);
 
 	const [campusErrors, setCampusErrors] = useState([]);
-	const [contactErrors, setContactErrors] = useState([]);
 
 	const { campuses, contacts, isActive, notes, showNotes } = attributes;
 
-	const reminderMessage = `Don't forget to select "Update" on this page as well!`;
+	const reminderMessage = `Don't forget to select "Update" or "Publish" on this page as well!`;
 
 	useEffect(() => {
 		if (campusSaved) {
@@ -96,29 +94,14 @@ export default function Edit({ attributes, setAttributes }) {
 	const toggleContact = () => setContactToggle(!contactToggle);
 
 	const saveContact = () => {
-		const formattedPhone = formatPhone(contactPhone);
-
-		if (formattedPhone.error) {
-			setContactErrors((existingErrors) => {
-				return [...existingErrors, formattedPhone.code];
-			});
-
-			setTimeout(() => {
-				setContactErrors([]);
-			}, 5000);
-
-			return;
-		}
-
 		toggleContact();
 		setAttributes({
 			contacts: [
 				...contacts,
-				{ contactName, contactEmail, contactPhone: formattedPhone.value },
+				{ contactName, contactEmail },
 			],
 		});
 		setContactName("");
-		setContactPhone("");
 		setContactEmail("");
 		setContactSaved(true);
 	};
@@ -141,7 +124,6 @@ export default function Edit({ attributes, setAttributes }) {
 			case "contact":
 				setContactToggle(false);
 				setContactName("");
-				setContactPhone("");
 				setContactEmail("");
 				break;
 		}
@@ -221,27 +203,10 @@ export default function Edit({ attributes, setAttributes }) {
 					)}
 				</PanelBody>
 				<PanelBody
-					title={__("Secondary Contacts", "department-directory")}
+					title={__("Supervisory Contacts", "department-directory")}
 					initialOpen={false}
 					onToggle={(nextValue) => handlePanelToggle(nextValue, "contact")}
 				>
-					{contactErrors.length > 0 && (
-						<>
-							{contactErrors.map((error) => (
-								<PanelRow>
-									<div className="department-listing__editor__panel__error with-icon">
-										<Icon
-											className="department-listing__icon"
-											icon="warning"
-											size="14"
-										/>
-										<span>{error}</span>
-									</div>
-								</PanelRow>
-							))}
-						</>
-					)}
-
 					{contactSaved && <Snackbar>{reminderMessage}</Snackbar>}
 
 					{!contactToggle && (
@@ -256,11 +221,9 @@ export default function Edit({ attributes, setAttributes }) {
 						<ContactsForm
 							contactEmail={contactEmail}
 							contactName={contactName}
-							contactPhone={contactPhone}
 							saveContact={saveContact}
 							setContactEmail={setContactEmail}
 							setContactName={setContactName}
-							setContactPhone={setContactPhone}
 							clearForm={clearForm}
 						/>
 					)}
@@ -362,11 +325,9 @@ const PanelCampusList = ({ campuses, removeCampus }) => {
 const ContactsForm = ({
 	contactEmail,
 	contactName,
-	contactPhone,
 	saveContact,
 	setContactEmail,
 	setContactName,
-	setContactPhone,
 	clearForm,
 }) => {
 	return (
@@ -379,13 +340,7 @@ const ContactsForm = ({
 						onChange={(value) => setContactName(value)}
 						required
 					/>
-					<TextControl
-						label={__("Phone", "department-directory")}
-						value={contactPhone}
-						onChange={(value) => setContactPhone(value)}
-						type="tel"
-						required
-					/>
+
 					<TextControl
 						label={__("Email", "department-directory")}
 						value={contactEmail}
@@ -395,7 +350,7 @@ const ContactsForm = ({
 					<Button
 						variant="primary"
 						onClick={saveContact}
-						disabled={contactName.length < 1 || contactPhone.length < 1}
+						disabled={contactName.length < 1}
 					>
 						Save Contact
 					</Button>
@@ -420,10 +375,6 @@ const PanelContactList = ({ contacts, removeContact }) => {
 								<h3 className="department-listing__editor__panel__record-list__attribute">
 									{contact.contactName}
 								</h3>
-								<p className="department-listing__editor__panel__record-list__attribute">
-									<Icon size="12" icon="smartphone" />
-									{contact.contactPhone}
-								</p>
 								<p className="department-listing__editor__panel__record-list__attribute">
 									<Icon size="12" icon="email" />
 									{contact.contactEmail}

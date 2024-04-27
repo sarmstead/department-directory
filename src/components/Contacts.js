@@ -2,9 +2,9 @@ export default function Contacts({ contacts }) {
 	return (
 		<>
 			{contacts.length > 0 && (
-				<section className="knight-finder__contact-list">
+				<section className="department-listing__contact-list">
 					<h3>Secondary Contacts</h3>
-					<div className="knight-finder__contact-list__items">
+					<div className="department-listing__contact-list__items">
 						{contacts.map((contact) => {
 							return (
 								<article key={contact.contactName}>

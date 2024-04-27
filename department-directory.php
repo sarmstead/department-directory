@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name:       KnightFinder
+ * Plugin Name:       Department Directory
  * Plugin URI:        https://sunjayarmstead.com
  * Description:       A lightweight block for displaying department information.
  * Requires at least: 6.1
  * Requires PHP:      7.0
- * Version:           0.1.1
+ * Version:           0.1.2
  * Author:            Sunjay Armstead
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       knight-finder
+ * Text Domain:       department-directory
  *
- * @package KnightFinder
+ * @package Department Directory
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function knight_finder_knight_finder_block_init() {
+function department_directory_department_listing_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
-add_action( 'init', 'knight_finder_knight_finder_block_init' );
+add_action( 'init', 'department_directory_department_listing_block_init' );

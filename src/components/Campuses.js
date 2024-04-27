@@ -12,7 +12,7 @@ export default function Campuses({ campuses }) {
 	return (
 		<>
 			{campuses.length > 0 && (
-				<div className="knight-finder__campus-list">
+				<div className="department-listing__campus-list">
 					<h3>Campus Directory</h3>
 					<table>
 						<thead>

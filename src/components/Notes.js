@@ -4,9 +4,9 @@ import { RichText } from "@wordpress/block-editor";
 export default function Notes({ notes, context = "edit", setAttributes }) {
 	if (context.toLowerCase() === "save") {
 		return (
-			<section className="knight-finder__notes">
+			<section className="department-listing__notes">
 				<h3>Notes</h3>
-				<section className="knight-finder__notes__rich-text">
+				<section className="department-listing__notes__rich-text">
 					<RichText.Content value={notes} />
 				</section>
 			</section>
@@ -14,9 +14,9 @@ export default function Notes({ notes, context = "edit", setAttributes }) {
 	}
 
 	return (
-		<section className="knight-finder__notes">
+		<section className="department-listing__notes">
 			<h3>Notes</h3>
-			<section className="knight-finder__notes__rich-text">
+			<section className="department-listing__notes__rich-text">
 				<RichText
 					value={notes}
 					allowedFormats={["core/bold", "core/italic", "core/link"]}

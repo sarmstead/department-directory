@@ -1,9 +1,9 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "knight-finder/knight-finder",
-	"version": "0.1.1",
-	"title": "KnightFinder",
+	"name": "department-directory/department-listing",
+	"version": "0.1.2",
+	"title": "Department Listing",
 	"category": "widgets",
 	"description": "A lightweight block for displaying department information.",
 	"example": {},
@@ -30,10 +30,9 @@
 	"supports": {
 		"html": false
 	},
-	"textdomain": "knight-finder",
+	"textdomain": "department-directory",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
-	"render": "file:./render.php",
-	"viewScript": "file:./view.js"
+	"render": "file:./render.php"
 }

@@ -1,4 +1,4 @@
-# KnightFinder
+# Department Listing Block
 
 A lightweight block for finding departments.
 
@@ -16,7 +16,7 @@ Set up the WordPress Docker containers (create the database, servers, etc. that 
 npm run dev
 ```
 
-Fire up the React server to develop the KnightFinder WordPress block.
+Fire up the React server to develop the Department Listing WordPress block.
 
 ```bash
 npm run start

@@ -157,24 +157,24 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__("Settings", "knight-finder")}>
+				<PanelBody title={__("Settings", "department-directory")}>
 					<PanelRow>
 						<ToggleControl
-							label={__(`${isActive ? "Active" : "Inactive"}`, "knight-finder")}
+							label={__(`${isActive ? "Active" : "Inactive"}`, "department-directory")}
 							checked={!!isActive}
 							onChange={() => setAttributes({ isActive: !isActive })}
 						/>
 					</PanelRow>
 					<PanelRow>
 						<ToggleControl
-							label={__("Notes", "knight-finder")}
+							label={__("Notes", "department-directory")}
 							checked={!!showNotes}
 							onChange={() => setAttributes({ showNotes: !showNotes })}
 						/>
 					</PanelRow>
 				</PanelBody>
 				<PanelBody
-					title={__("Campuses", "knight-finder")}
+					title={__("Campuses", "department-directory")}
 					initialOpen={false}
 					onToggle={(nextValue) => handlePanelToggle(nextValue, "campus")}
 				>
@@ -182,9 +182,9 @@ export default function Edit({ attributes, setAttributes }) {
 						<>
 							{campusErrors.map((error) => (
 								<PanelRow>
-									<div className="knight-finder__editor__panel__error with-icon">
+									<div className="department-listing__editor__panel__error with-icon">
 										<Icon
-											className="knight-finder__icon"
+											className="department-listing__icon"
 											icon="warning"
 											size="14"
 										/>
@@ -221,7 +221,7 @@ export default function Edit({ attributes, setAttributes }) {
 					)}
 				</PanelBody>
 				<PanelBody
-					title={__("Secondary Contacts", "knight-finder")}
+					title={__("Secondary Contacts", "department-directory")}
 					initialOpen={false}
 					onToggle={(nextValue) => handlePanelToggle(nextValue, "contact")}
 				>
@@ -229,9 +229,9 @@ export default function Edit({ attributes, setAttributes }) {
 						<>
 							{contactErrors.map((error) => (
 								<PanelRow>
-									<div className="knight-finder__editor__panel__error with-icon">
+									<div className="department-listing__editor__panel__error with-icon">
 										<Icon
-											className="knight-finder__icon"
+											className="department-listing__icon"
 											icon="warning"
 											size="14"
 										/>
@@ -298,13 +298,13 @@ const CampusForm = ({
 			<Card>
 				<CardBody>
 					<TextControl
-						label={__("Name", "knight-finder")}
+						label={__("Name", "department-directory")}
 						value={campusName}
 						onChange={(value) => setCampusName(value)}
 						required
 					/>
 					<TextControl
-						label={__("Phone", "knight-finder")}
+						label={__("Phone", "department-directory")}
 						value={campusPhone}
 						onChange={(value) => setCampusPhone(value)}
 						type="tel"
@@ -328,17 +328,17 @@ const CampusForm = ({
 
 const PanelCampusList = ({ campuses, removeCampus }) => {
 	return (
-		<div className="knight-finder__editor__panel__record-list">
+		<div className="department-listing__editor__panel__record-list">
 			<h2>Added Campuses</h2>
 			<ul>
 				{campuses.map((campus) => {
 					return (
 						<li key={campus.campusName}>
 							<div>
-								<h3 className="knight-finder__editor__panel__record-list__attribute">
+								<h3 className="department-listing__editor__panel__record-list__attribute">
 									{campus.campusName}&nbsp;Campus
 								</h3>
-								<p className="knight-finder__editor__panel__record-list__attribute">
+								<p className="department-listing__editor__panel__record-list__attribute">
 									<Icon size="12" icon="smartphone" />
 									{campus.campusPhone}
 								</p>
@@ -374,20 +374,20 @@ const ContactsForm = ({
 			<Card>
 				<CardBody>
 					<TextControl
-						label={__("Name", "knight-finder")}
+						label={__("Name", "department-directory")}
 						value={contactName}
 						onChange={(value) => setContactName(value)}
 						required
 					/>
 					<TextControl
-						label={__("Phone", "knight-finder")}
+						label={__("Phone", "department-directory")}
 						value={contactPhone}
 						onChange={(value) => setContactPhone(value)}
 						type="tel"
 						required
 					/>
 					<TextControl
-						label={__("Email", "knight-finder")}
+						label={__("Email", "department-directory")}
 						value={contactEmail}
 						onChange={(value) => setContactEmail(value)}
 						required
@@ -410,21 +410,21 @@ const ContactsForm = ({
 
 const PanelContactList = ({ contacts, removeContact }) => {
 	return (
-		<div className="knight-finder__editor__panel__record-list">
+		<div className="department-listing__editor__panel__record-list">
 			<h2>Added Contacts</h2>
 			<ul>
 				{contacts.map((contact) => {
 					return (
 						<li key={contact.contactName}>
 							<div>
-								<h3 className="knight-finder__editor__panel__record-list__attribute">
+								<h3 className="department-listing__editor__panel__record-list__attribute">
 									{contact.contactName}
 								</h3>
-								<p className="knight-finder__editor__panel__record-list__attribute">
+								<p className="department-listing__editor__panel__record-list__attribute">
 									<Icon size="12" icon="smartphone" />
 									{contact.contactPhone}
 								</p>
-								<p className="knight-finder__editor__panel__record-list__attribute">
+								<p className="department-listing__editor__panel__record-list__attribute">
 									<Icon size="12" icon="email" />
 									{contact.contactEmail}
 								</p>

@@ -2,7 +2,7 @@ export default function Status({ isActive }) {
 	return (
 		<>
 			{isActive ? (
-				<div class="knight-finder__status active">
+				<div class="department-listing__status active">
 					<svg
 						fill="currentColor"
 						xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ export default function Status({ isActive }) {
 				</div>
 			) : (
 				<>
-					<div class="knight-finder__status inactive">
+					<div class="department-listing__status inactive">
 						<svg
 							fill="currentColor"
 							xmlns="http://www.w3.org/2000/svg"

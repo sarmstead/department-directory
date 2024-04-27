@@ -20,7 +20,7 @@ import "./style.scss";
 import Edit from "./edit";
 import save from "./save";
 import settings from "./block.json";
-import KnightFinderIcon from "./components/KnightFinderIcon";
+import DepartmentListingIcon from "./components/DepartmentListingIcon";
 
 /**
  * Every block starts by registering a new block type definition.
@@ -31,7 +31,7 @@ registerBlockType(settings.name, {
 	/**
 	 * @see ./edit.js
 	 */
-	icon: KnightFinderIcon,
+	icon: DepartmentListingIcon,
 	save,
 	edit: Edit,
 });

@@ -1,6 +1,6 @@
 {
-	"name": "knight-finder",
-	"version": "0.1.1",
+	"name": "department-directory",
+	"version": "0.1.2",
 	"description": "A lightweight block for displaying department information.",
 	"author": "Sunjay Armstead",
 	"license": "GPL-2.0-or-later",
@@ -12,7 +12,7 @@
 		"lint:css": "wp-scripts lint-style",
 		"lint:js": "wp-scripts lint-js",
 		"packages-update": "wp-scripts packages-update",
-		"zip": "wp-scripts plugin-zip && mv knight-finder.zip release/knight-finder.zip",
+		"zip": "wp-scripts plugin-zip && mv department-directory.zip release/department-directory.zip",
 		"start": "wp-scripts start --webpack-copy-php",
 		"dev": "wp-env start",
 		"stop": "wp-env stop"

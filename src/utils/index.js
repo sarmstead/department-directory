@@ -23,3 +23,7 @@ export const formatPhone = (phone) => {
 
 	return { value: formattedNumber, code: "SUCCESS", error: false };
 };
+
+export const findCampus = (campusList, id) => campusList.find(({campusName}) => campusName === id)
+
+export const findCampusIndex = (campusList, id) => campusList.findIndex(({campusName}) => campusName === id)

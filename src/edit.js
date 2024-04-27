@@ -18,7 +18,7 @@ import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
 import Notes from "./components/Notes";
 import "./editor.scss";
-import { formatPhone } from "./utils";
+import { findCampus, findCampusIndex, formatPhone } from "./utils";
 
 export default function Edit({ attributes, setAttributes }) {
 	const { campuses, contacts, isActive, notes, showNotes } = attributes;
@@ -55,14 +55,14 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const updateCampusList = (value, campusName) => {
 		const mutatedArr = [...campusList]
-		const targetCampusIndex = mutatedArr.findIndex(({campusName}) => campusName === campusName)
+		const targetCampusIndex = findCampusIndex(mutatedArr, campusName)
 		mutatedArr[targetCampusIndex] = { campusName, campusPhone: value}
 
 		setCampusList(mutatedArr)
 	}
 
 	const saveCampus = (id) => {
-		const targetCampus = campusList.find(({campusName}) => campusName === id)
+		const targetCampus = findCampus(campusList, id)
 		const phoneIsInternational = targetCampus.campusPhone.length >= 15;
 		const formattedPhone = phoneIsInternational
 			? { error: false, code: "SUCCESS", value: targetCampus.campusPhone }
@@ -81,7 +81,7 @@ export default function Edit({ attributes, setAttributes }) {
 		}
 
 		const mutatedArr = [...campuses]
-		const targetCampusIndex = mutatedArr.findIndex(({campusName}) => campusName === id)
+		const targetCampusIndex = findCampusIndex(mutatedArr, id)
 		mutatedArr[targetCampusIndex] = { campusName: id, campusPhone: formattedPhone.value}
 
 		setAttributes({ campuses: mutatedArr });
@@ -257,7 +257,7 @@ const CampusForm = ({ campusList, name, saveCampus, updateCampusList }) => {
 				<CardBody>
 					<TextControl
 						label={__(`${name} Campus`, "department-directory")}
-						value={campusList.find(({campusName}) => campusName === name).campusPhone}
+						value={findCampus(campusList, name).campusPhone}
 						onChange={(value) => updateCampusList(value, name)}
 						type="tel"
 						required

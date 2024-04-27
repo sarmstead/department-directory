@@ -1,3 +1,5 @@
+import { findCampus } from "../utils";
+
 export default function Campuses({ campuses }) {
 	const stylePhone = (number, isExtension = false) => {
 		const beforeExtension = number.slice(0, 10);
@@ -10,11 +12,10 @@ export default function Campuses({ campuses }) {
 		return beforeExtension;
 	};
 
-	const findCampus = (id) => campuses.find(({campusName}) => campusName === id)
-	const florham = findCampus("Florham")
-	const metropolitan = findCampus("Metropolitan")
-	const vancouver = findCampus("Vancouver")
-	const wroxton = findCampus("Wroxton")
+	const florham = findCampus(campuses, "Florham")
+	const metropolitan = findCampus(campuses, "Metropolitan")
+	const vancouver = findCampus(campuses, "Vancouver")
+	const wroxton = findCampus(campuses, "Wroxton")
 	return (
 		<>
 			<div className="department-listing__campus-list">

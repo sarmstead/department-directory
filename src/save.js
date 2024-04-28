@@ -17,7 +17,7 @@ export default function save({ attributes }) {
 			{showNotes && <Notes notes={notes} context="save" />}
 
 			{tags.length > 0 && (
-				<Keywords tags={tags} />
+				<Keywords tags={tags} postType={wp.data.select('core/editor').getCurrentPost().type} />
 			)}
 
 		</div>

@@ -256,7 +256,7 @@ export default function Edit({ attributes, context: {postType}, setAttributes })
 					<Notes setAttributes={setAttributes} notes={notes} context="edit" />
 				)}
 				{tags.length > 0 && (
-					<Keywords tags={tags} />
+					<Keywords tags={tags} postType={postType} />
 				)}
 			</div>
 		</>

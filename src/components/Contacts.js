@@ -3,7 +3,7 @@ export default function Contacts({ contacts }) {
 		<>
 			{contacts.length > 0 && (
 				<section className="department-listing__contact-list">
-					<h3>Supervisory Contacts</h3>
+					<h3>Supervisory Contact</h3>
 					<div className="department-listing__contact-list__items">
 						{contacts.map((contact) => {
 							return (

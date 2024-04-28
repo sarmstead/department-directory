@@ -215,7 +215,7 @@ export default function Edit({ attributes, context: {postType}, setAttributes })
 					/>
 				</PanelBody>
 				<PanelBody
-					title={__("Supervisory Contacts", "department-directory")}
+					title={__("Supervisory Contact", "department-directory")}
 					initialOpen={false}
 					onToggle={(nextValue) => handlePanelToggle(nextValue, "contact")}
 				>

@@ -1,6 +1,6 @@
 {
 	"name": "department-directory",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "A lightweight block for displaying department information.",
 	"author": "Sunjay Armstead",
 	"license": "GPL-2.0-or-later",

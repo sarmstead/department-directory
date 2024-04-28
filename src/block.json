@@ -39,6 +39,7 @@
 	"supports": {
 		"html": false
 	},
+	"usesContext": [ "postType" ],
 	"textdomain": "department-directory",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",

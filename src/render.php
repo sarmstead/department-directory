@@ -25,7 +25,9 @@ $allowed_html = [
 	'tbody' => [],
 	'tr' => [],
 	'td' => [],
-	'h3' => [],
+	'h3' => [
+		'class' => []
+	],
 	'strong' => [],
 	'section' => [
 		'class' => []
@@ -33,10 +35,15 @@ $allowed_html = [
 	'article' => [],
 	'em' => [],
 	'a' => [
-		'href' => []
+		'href' => [],
+		'class' => []
 	],
-	'ul' => [],
-	'li' => []
+	'ul' => [
+		'class' => []
+	],
+	'li' => [
+		'class' => []
+	]
 ];
 
 echo wp_kses($content, $allowed_html);

@@ -17,11 +17,11 @@ import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
 import Notes from "./components/Notes";
-import Tags from "./components/Tags";
+import Keywords from "./components/Keywords";
 import "./editor.scss";
 import { findCampus, findCampusIndex, formatPhone } from "./utils";
 
-export default function Edit({ attributes, setAttributes }) {
+export default function Edit({ attributes, context: {postType}, setAttributes }) {
 	const { campuses, contacts, isActive, notes, showNotes, tags } = attributes;
 
 	const [campusList, setCampusList] = useState(campuses);
@@ -37,8 +37,9 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const reminderMessage = `Don't forget to select "Update" or "Publish" on this page as well!`;
 
-	const tagIds = wp.data.select('core/editor').getEditedPostAttribute('tags')
-  const tagsData = wp.data.select( 'core' ).getEntityRecords( 'taxonomy', 'post_tag', { include: tagIds })
+	const tagMeta = postType.includes('epkb') ? {type: 'epkb_post_type_1_tag', slug: 'epkb_post_type_1_tag'} : {type: 'tag', slug: 'post_tag'}
+	const tagIds = wp.data.select('core/editor').getEditedPostAttribute(tagMeta.type)
+  const tagsData = wp.data.select( 'core' ).getEntityRecords( 'taxonomy', tagMeta.slug, { include: tagIds })
 
 	useEffect(() => {
 		if (tagsData) {
@@ -255,7 +256,7 @@ export default function Edit({ attributes, setAttributes }) {
 					<Notes setAttributes={setAttributes} notes={notes} context="edit" />
 				)}
 				{tags.length > 0 && (
-					<Tags tags={tags} />
+					<Keywords tags={tags} />
 				)}
 			</div>
 		</>

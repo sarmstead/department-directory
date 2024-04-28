@@ -4,7 +4,7 @@ import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
 import Notes from "./components/Notes";
-import Tags from "./components/Tags";
+import Keywords from "./components/Keywords";
 
 export default function save({ attributes }) {
 	const { campuses, contacts, isActive, notes, showNotes, tags } = attributes;
@@ -17,7 +17,7 @@ export default function save({ attributes }) {
 			{showNotes && <Notes notes={notes} context="save" />}
 
 			{tags.length > 0 && (
-				<Tags tags={tags} />
+				<Keywords tags={tags} />
 			)}
 
 		</div>

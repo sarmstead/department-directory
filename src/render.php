@@ -31,7 +31,12 @@ $allowed_html = [
 		'class' => []
 	],
 	'article' => [],
-	'em' => []
+	'em' => [],
+	'a' => [
+		'href' => []
+	],
+	'ul' => [],
+	'li' => []
 ];
 
 echo wp_kses($content, $allowed_html);

@@ -65,4 +65,10 @@
 			}
 		}
 	}
+
+	&__tags {
+		a {
+			pointer-events: none;
+		}
+	}
 }

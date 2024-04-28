@@ -17,11 +17,12 @@ import Status from "./components/Status";
 import Campuses from "./components/Campuses";
 import Contacts from "./components/Contacts";
 import Notes from "./components/Notes";
+import Tags from "./components/Tags";
 import "./editor.scss";
 import { findCampus, findCampusIndex, formatPhone } from "./utils";
 
 export default function Edit({ attributes, setAttributes }) {
-	const { campuses, contacts, isActive, notes, showNotes } = attributes;
+	const { campuses, contacts, isActive, notes, showNotes, tags } = attributes;
 
 	const [campusList, setCampusList] = useState(campuses);
 
@@ -34,8 +35,16 @@ export default function Edit({ attributes, setAttributes }) {
 
 	const [campusErrors, setCampusErrors] = useState([]);
 
-
 	const reminderMessage = `Don't forget to select "Update" or "Publish" on this page as well!`;
+
+	const tagIds = wp.data.select('core/editor').getEditedPostAttribute('tags')
+  const tagsData = wp.data.select( 'core' ).getEntityRecords( 'taxonomy', 'post_tag', { include: tagIds })
+
+	useEffect(() => {
+		if (tagsData) {
+			setAttributes({tags: tagsData.map(({name}) => name)})
+		}
+	}, tagsData)
 
 	useEffect(() => {
 		if (campusSaved) {
@@ -244,6 +253,9 @@ export default function Edit({ attributes, setAttributes }) {
 				<Contacts contacts={contacts} />
 				{showNotes && (
 					<Notes setAttributes={setAttributes} notes={notes} context="edit" />
+				)}
+				{tags.length > 0 && (
+					<Tags tags={tags} />
 				)}
 			</div>
 		</>

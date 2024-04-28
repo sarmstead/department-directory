@@ -116,4 +116,38 @@
 			}
 		}
 	}
+
+	&__tags {
+		h3 {
+			margin-top: 0;
+			margin-bottom: 8px;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: row;
+			gap: 8px;
+			margin: 0;
+			padding: 0;
+		}
+
+		li {
+			font-size: 14px;
+			list-style: none;
+			background: #ffffff;
+			border-radius: 20px;
+			width: fit-content;
+			padding: 4px 16px;
+			border: 1px solid #000000;
+		}
+
+		a {
+			text-decoration: none;
+
+			&:hover {
+			text-decoration: none;
+			}
+		}
+	}
+
 }

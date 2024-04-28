@@ -138,14 +138,7 @@
 				width: fit-content;
 				padding: 4px 16px;
 				border: 1px solid #000000;
-			}
-
-			&__link {
-				text-decoration: none;
-
-				&:hover {
-				text-decoration: none;
-				}
+				cursor: default;
 			}
 		}
 	}
